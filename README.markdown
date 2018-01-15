@@ -67,3 +67,36 @@ services:
 `$ docker-compose up --build`
 
 Rails is now running on port 3000
+
+3.- Add rspec for rails
+
+Add rspec-rails into Gemfile make it with user permissions
+
+`$ sudo chown -R $user ../your_path`
+
+```
+group :test do
+  gem 'rspec-rails', '~> 3.7'
+end
+```
+
+`$ docker-compose up --build`
+
+Initialize the spec/ directory
+
+`$ docker-compose run web bash`
+
+`/myapp# rails generate rspec:install`
+
+Add rspec configuration to .rspec
+
+```
+--require spec_helper
+--format documentation
+--order random
+--color
+```
+
+Add user permissions to spec folder
+
+`$ sudo chown -R $user ../your_path`
