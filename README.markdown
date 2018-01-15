@@ -25,3 +25,45 @@ services:
     ports:
       - '3000:3000'
 ```
+
+2.- Enter in docker container and install rails. Modify docker-compose and Dockerfile.
+
+`$ docker-compose run web bash`
+
+```
+/myapp# gem install rails
+/myapp# rails new . -T
+```
+
+```
+FROM ruby:2.4.2
+
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+RUN mkdir /myapp
+WORKDIR /myapp
+
+RUN gem install bundler --pre
+
+ADD . /myapp
+
+RUN bundler install
+```
+
+```
+version: '2'
+services:
+  web:
+    build: .
+    command: bundle exec rake db:migrate
+    command: bundle exec rake db:seed
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/myapp
+    ports:
+      - '3000:3000'
+```
+
+`$ docker-compose up --build`
+
+Rails is now running on port 3000
