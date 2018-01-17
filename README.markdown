@@ -137,3 +137,17 @@ describe 'Test System' do
   end
 end
 ```
+
+5.- Change Gemfile to use prosgres in Heroku
+
+Needs to add pg gem to Gemfile and move sqlite3 to :test :development group
+
+Add this versión or Heroku launch an error
+
+`gem 'pg', '~> 0.21.0'`
+
+Needs Build
+
+`$ docker-compose up --build`
+
+In Heroku console need to migrate database rake `db:migrate`
